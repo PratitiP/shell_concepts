@@ -1,3 +1,4 @@
+#!/bin/bash
 echo Enter a no to get prime factors : 
 read n
 
@@ -19,6 +20,6 @@ do
 	done
 done
 
-if [[ $n > 2 ]];
+if [[ n > 2 ]];
 then echo $n
 fi
