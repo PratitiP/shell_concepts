@@ -7,5 +7,9 @@ do
 	ans=$((2**$i))
 	echo $ans
 	(( i++ ))
+	if [[ $i -gt $n ]]
+	then
+		break
+	fi
 done
 
