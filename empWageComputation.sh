@@ -11,14 +11,8 @@ monthlyWage=0
 dailyWage=0
 totalWorkingHrs=0
 
-echo Welcome to Employee Wage Computation Program
-
-#check attendance & add empHrs accordingly
-#calculate for a month
-for (( day=1 ; day<=$MONTH_WORKING_DAYS ; day++ ))
-do
-	randAttend=$((RANDOM%3));
-	case $randAttend in
+function getWorkHrs(){
+	case $1 in
 		$FULL_DAY)
 			empHrs=8
 			;;
@@ -29,7 +23,17 @@ do
 			empHrs=0
 			;;
 	esac
-	totalWorkingHrs=$(( totalWorkingHrs + empHrs ))
+	echo $empHrs
+}
+
+echo Welcome to Employee Wage Computation Program
+
+#check attendance & add empHrs accordingly
+#calculate for a month
+for (( day=1 ; day<=$MONTH_WORKING_DAYS ; day++ ))
+do
+	empWorkHrs=$( getWorkHrs $((RANDOM%3)) )
+	totalWorkingHrs=$(( totalWorkingHrs + empWorkHrs ))
 	if [[ $totalWorkingHrs -ge 100 ]]
 	then 
 		totalWorkingHrs=100
@@ -37,6 +41,7 @@ do
 		break
 	fi
 done
+
 if [[ $day > 20 ]]
 then
 	echo Total Working days Reached
