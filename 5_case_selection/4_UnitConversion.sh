@@ -5,16 +5,17 @@ read n
 
 case $n in
 	1)
-		printf "$v ft = %f inch" $(($v*12));;
-	3)
-		printf "$v inch = %f ft" $(($v/12));;
+		v1=`echo "scale=2; $v * 12" | bc`
+		echo "$v inch = $v1 ft";;
+	3)	
+		v1=`echo "scale=2; $v / 12" | bc`
+		echo "$v inch = $v1 ft";;
 	2)
-		v1=`echo "scale=2; $v / 3.28" | bc` ;
-		printf "$v ft = %.2f meter" $v1;
-		;;
+		v1=`echo "scale=2; $v / 3.28" | bc`
+		printf "$v ft = %.2f meter" $v1;;
 	4)
-		v1=`echo "scale=2; $v * 3.28" | bc` ;
-		printf "$v meter = %f ft" $v1;;
+		v1=`echo "scale=2; $v * 3.28" | bc`
+		printf "$v meter = %.2f ft" $v1;;
 	*)
 		echo "invalid input"
 esac
