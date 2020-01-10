@@ -9,6 +9,7 @@ MONTH_WORKING_DAYS=20
 #variables for wage calculations
 monthlyWage=0
 dailyWage=0
+totalWorkingHrs=0
 
 echo Welcome to Employee Wage Computation Program
 
@@ -28,11 +29,19 @@ do
 			empHrs=0
 			;;
 	esac
-	#calculate monthly wage
-	dailyWage=$(( WAGE_PER_HR * empHrs))
-	monthlyWage=$(( monthlyWage + dailyWage))
+	totalWorkingHrs=$(( totalWorkingHrs + empHrs ))
+	if [[ $totalWorkingHrs -ge 100 ]]
+	then 
+		totalWorkingHrs=100
+		echo Total Working Hrs Reached
+		break
+	fi
 done
-
+if [[ $day > 20 ]]
+then
+	echo Total Working days Reached
+fi
+monthlyWage=$(( totalWorkingHrs * WAGE_PER_HR ))
 echo "Monthly Salary = $monthlyWage"
 
 
