@@ -11,6 +11,8 @@ monthlyWage=0
 dailyWage=0
 totalWorkingHrs=0
 
+declare -A empDailyWageDict
+
 function getWorkHrs(){
 	case $1 in
 		$FULL_DAY)
@@ -40,7 +42,7 @@ for (( day=1 ; day<=$MONTH_WORKING_DAYS ; day++ ))
 do
 	empWorkHrs=$( getWorkHrs $((RANDOM%3)) )
 	totalWorkingHrs=$(( totalWorkingHrs + empWorkHrs ))
-	empDailyWageArr[$day]=$( calDailyWage $empWorkHrs )
+	empDailyWageDict[$day]=$( calDailyWage $empWorkHrs )
 	if [[ $totalWorkingHrs -ge 100 ]]
 	then 
 		totalWorkingHrs=100
@@ -55,6 +57,10 @@ then
 fi
 monthlyWage=$( calDailyWage $totalWorkingHrs )
 echo "Monthly Salary = $monthlyWage"
-echo "Daily Wage : ${empDailyWageArr[@]}"
 
+#print all days and daily wages
+for i in `echo ${!empDailyWageDict[@]} | sort`
+do
+	echo "day : $i -> Rs.${empDailyWageDict[$i]}"
+done
 
