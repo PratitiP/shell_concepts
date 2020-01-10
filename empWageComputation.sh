@@ -9,18 +9,21 @@ echo Welcome to Employee Wage Computation Program
 
 #check attendance & add empHrs accordingly
 randAttend=$((RANDOM%3));
-if [[ $randAttend == $FULL_DAY ]]
-then
-	echo "Employee is Present"
-	empHrs=8
-elif [[ $randAttend == $PART_TIME ]]
-then
-	echo "Employee is Part Time"
-	empHrs=4
-else
-	echo "Employee is absent"
-	empHrs=0
-fi
+#modified for switch case
+case $randAttend in
+	$FULL_DAY)
+		echo "Employee is Present"
+		empHrs=8
+		;;
+	$PART_TIME)
+		echo "Employee is Part Time"
+		empHrs=4
+		;;
+	*)
+		echo "Employee is absent"
+		empHrs=0
+		;;
+esac
 
 #calculate daliy wage
 dailyWage=$(( WAGE_PER_HR * empHrs))
