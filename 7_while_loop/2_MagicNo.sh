@@ -26,7 +26,7 @@ do
 		np=$temp
 	fi
 
-	echo "nc = $nc and np = $np"
+	#echo "nc = $nc and np = $np"
 	if [[ ($nc -eq $np) || ($newFactor -eq 0) ]]
 	then 
 		if [[ $lg == 'y' ]]
