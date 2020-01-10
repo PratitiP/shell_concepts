@@ -26,6 +26,12 @@ function getWorkHrs(){
 	echo $empHrs
 }
 
+function calDailyWage(){
+	local workHrs=$1
+	wage=$((workHrs * WAGE_PER_HR))
+	echo $wage
+}
+
 echo Welcome to Employee Wage Computation Program
 
 #check attendance & add empHrs accordingly
@@ -34,6 +40,7 @@ for (( day=1 ; day<=$MONTH_WORKING_DAYS ; day++ ))
 do
 	empWorkHrs=$( getWorkHrs $((RANDOM%3)) )
 	totalWorkingHrs=$(( totalWorkingHrs + empWorkHrs ))
+	empDailyWageArr[$day]=$( calDailyWage $empWorkHrs )
 	if [[ $totalWorkingHrs -ge 100 ]]
 	then 
 		totalWorkingHrs=100
@@ -46,7 +53,8 @@ if [[ $day > 20 ]]
 then
 	echo Total Working days Reached
 fi
-monthlyWage=$(( totalWorkingHrs * WAGE_PER_HR ))
+monthlyWage=$( calDailyWage $totalWorkingHrs )
 echo "Monthly Salary = $monthlyWage"
+echo "Daily Wage : ${empDailyWageArr[@]}"
 
 
