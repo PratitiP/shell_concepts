@@ -24,6 +24,24 @@ function getTripletFlipResult(){
 	tripletDict[$r1$r2$r3]=$(( ${tripletDict[$r1$r2$r3]} +1))
 }
 
+function sort(){
+	size=${#computArr[@]}
+	for (( i=0 ; i<size ; i++ ))
+	do
+		for(( j=$(($i+1)) ; j<size ; j++ ))
+		do
+			if [[ ${computArr[$i]} -gt ${computArr[$j]} ]]
+			then
+				temp=${computArr[$i]}
+				computArr[i]=${computArr[$j]}
+				computArr[j]=$temp
+			fi
+		done
+	done
+	max=${computArr[((size-1))]}
+}
+
+#declare dictionaries for all 3 combinations
 declare -A resultDict
 resultDict=([0]=0 [1]=0)
 
@@ -43,12 +61,28 @@ do
 done
 
 echo -e "\nSinglet Combination"
-echo "Percentage of H = $(bc <<< "scale=2; (${resultDict[1]}*100)/$n")%"
-echo "Percentage of T = $(bc <<< "scale=2; (${resultDict[0]}*100)/$n")%"
+perH=$(bc <<< "scale=2; (${resultDict[1]}*100)/$n")
+perT=$(bc <<< "scale=2; (${resultDict[0]}*100)/$n")
+echo "Percentage of H = $perH%"
+echo "Percentage of T = $perT%"
+#find max in singlet combination
+echo "Winning combination :"
+if [[ $perH > $perT ]]
+then
+	echo "H have max percentage = $perH"
+elif [[ $perH < $perT ]]
+then
+	echo "T have max percentage = $perT"
+else
+	echo "Both H and T have same percentage = $perH"
+fi
 
 echo -e "\nDoublet Combination"
+c2=0
 for i in ${!doubletDict[@]}
 do
+	computArr[$c2]=${doubletDict[$i]}
+	(( c2++ ))
 	case $i in
 		00)echo "Percentage of TT = $(bc <<< "scale=2; (${doubletDict[$i]}*100)/$n")%";;
 		01)echo "Percentage of TH = $(bc <<< "scale=2; (${doubletDict[$i]}*100)/$n")%";;
@@ -56,10 +90,29 @@ do
 		11)echo "Percentage of HH = $(bc <<< "scale=2; (${doubletDict[$i]}*100)/$n")%";;
 	esac
 done
+sort
+#get key of max percentage in doubletDict
+echo "Winning combination :"
+for i in ${!doubletDict[@]}
+do
+	if [[ ${doubletDict[$i]} == $max ]]
+	then
+		maxper=$(bc <<< "scale=2; ($max*100)/$n")
+		case $i in
+			00)echo "TT have max percentage = $maxper%";;
+			01)echo "TH have max percentage = $maxper%";;
+			10)echo "HT have max percentage = $maxper%";;
+			11)echo "HH have max percentage = $maxper%";;
+		esac
+	fi
+done
 
 echo -e "\nTriplet Combination"
+c2=0
 for i in ${!tripletDict[@]}
 do
+	computArr[$c2]=${tripletDict[$i]}
+	(( c2++ ))
 	case $i in
 		000)echo "Percentage of TTT = $(bc <<< "scale=2; (${tripletDict[$i]}*100)/$n")%";;
 		001)echo "Percentage of TTH = $(bc <<< "scale=2; (${tripletDict[$i]}*100)/$n")%";;
@@ -71,5 +124,24 @@ do
 		111)echo "Percentage of HHH = $(bc <<< "scale=2; (${tripletDict[$i]}*100)/$n")%";;
 	esac
 done
-
+sort
+#get key of max percentage in tripletDict
+echo "Winning combination :"
+for i in ${!tripletDict[@]}
+do
+	if [[ ${tripletDict[$i]} == $max ]]
+	then
+		maxper=$(bc <<< "scale=2; ($max*100)/$n")
+		case $i in
+			000)echo "TTT have max percentage = $maxper%";;
+			001)echo "TTH have max percentage = $maxper%";;
+			010)echo "THT have max percentage = $maxper%";;
+			011)echo "THH have max percentage = $maxper%";;
+			100)echo "HTT have max percentage = $maxper%";;
+			101)echo "HTH have max percentage = $maxper%";;
+			110)echo "HHT have max percentage = $maxper%";;
+			111)echo "HHH have max percentage = $maxper%";;
+		esac
+	fi
+done
 
