@@ -32,13 +32,15 @@ do
 	if((stake==resignWin))
 	then
 		stakeWin=$((stakeWin+stake))
-		echo -e "You Won for the day $i\nYou played $noOfBets Bets to have stake = \$$stake"
-		echo "Total amount Won = \$$stake"
+		echo -e "You Won for the day $i = lucky day"
+		#echo "You played $noOfBets Bets to have stake = \$$stake"
+		echo -e "Total amount Won = \$$stake\n"
 		((dayWin++))
 	else
 		stakeLost=$((stakeLost+stake))
-		echo -e "You Lost for the day $i\nYou played $noOfBets Bets to have stake = \$$stake"
-		echo "Total amount Lost = \$$stake"
+		echo -e "You Lost for the day $i = Unlucky day"
+		#echo "You played $noOfBets Bets to have stake = \$$stake"
+		echo -e "Total amount Lost = \$$stake\n"
 		((dayLost++))
 	fi
 done
