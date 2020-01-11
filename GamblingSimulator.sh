@@ -4,29 +4,46 @@
 EVERY_DAY_START_STAKE=100
 BET=1
 
-stake=100
-startStake=100
-noOfBets=0
 echo -e "Welcome to Gambling Simulator\n----------------------------"
 echo -e "Every day Gambler can start with \$100\nEvery game you can bet \$1\n----------------------------"
 
-resignWin=$((startStake+startStake/2))
-resignLost=$((startStake/2))
-while(( (stake<resignWin) && (stake>resignLost) ))
+stakeWin=0
+stakeLost=0
+dayWin=0
+dayLost=0
+for(( i=1 ; i<=20 ; i++ ))
 do
-	((noOfBets++))
-	randBet=$((RANDOM%2))
-	if ((randBet==1))
+	startStake=$EVERY_DAY_START_STAKE
+	stake=$startStake
+	noOfBets=0
+	resignWin=$((startStake+startStake/2))
+	resignLost=$((startStake/2))
+	while(( (stake<resignWin) && (stake>resignLost) ))
+	do
+		((noOfBets++))
+		randBet=$((RANDOM%2))
+		if ((randBet==1))
+		then
+			stake=$((stake+BET))
+		else
+			stake=$((stake-BET))
+		fi
+	done
+	if((stake==resignWin))
 	then
-		((stake++))
+		stakeWin=$((stakeWin+stake))
+		echo -e "You Won for the day $i\nYou played $noOfBets Bets to have stake = \$$stake"
+		echo "Total amount Won = \$$stake"
+		((dayWin++))
 	else
-		((stake--))
+		stakeLost=$((stakeLost+stake))
+		echo -e "You Lost for the day $i\nYou played $noOfBets Bets to have stake = \$$stake"
+		echo "Total amount Lost = \$$stake"
+		((dayLost++))
 	fi
 done
 
-if((stake==resignWin))
-then
-	echo -e "You Won for the day\nYou played $noOfBets Bets to have stake = \$$stake"
-else
-	echo -e "You Lost for the day\nYou played $noOfBets Bets to have stake = \$$stake"
-fi
+echo -e "------------------------\nAfter 20 days\n-----------------------"
+echo -e "You won the game on $dayWin days\nYou Lost the game on $dayLost days"
+echo -e "Total amount Won = $stakeWin\nTotal amount Lost = $stakeLost"
+
