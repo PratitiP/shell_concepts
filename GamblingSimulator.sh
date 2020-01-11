@@ -43,7 +43,7 @@ do
 	fi
 done
 
-echo -e "------------------------\nAfter 20 days\n-----------------------"
-echo -e "You won the game on $dayWin days\nYou Lost the game on $dayLost days"
-echo -e "Total amount Won = $stakeWin\nTotal amount Lost = $stakeLost"
+echo -e "------------------------\nAfter a month\n-----------------------"
+echo -e "No of days you won the game =  $dayWin days\nTotal amount Won = $stakeWin"
+echo -e "No of days you lost the game = $dayLost days\nTotal amount Lost = $stakeLost"
 
