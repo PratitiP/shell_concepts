@@ -47,6 +47,72 @@ pos2=0
 rollCount2=0
 p=1
 
+
+function indexOf(){
+    local val=$2
+    eval "declare -A arg_array="${1#*=}
+    for index in "${!arg_array[@]}"
+    do
+        if [ "$val" == "${arg_array[$index]}" ]
+        then
+            echo $index
+            return 0
+        fi
+    done
+    echo NULL
+}
+
+function printTable(){
+    local ele=$1
+	color=$2
+
+    if((color==5))
+    then
+	 echo -ne "$(tput setab 5)$ele$(tput sgr0)\t"
+    elif((color==6))
+    then 
+	echo -ne "$(tput setab 6)$ele$(tput sgr0)\t"
+    elif [ -v snakes[$ele] ]
+    then
+        echo -ne "$(tput setab 1)$ele$(tput sgr0)\t"
+    elif [ -v ladders[$ele] ]
+    then
+        echo -ne "$(tput smul)$(tput setab 3)$ele$(tput sgr0)\t"
+    elif [ $(indexOf "$(declare -p snakes)" $ele) != "NULL" ]
+    then
+        echo -ne "$(tput setaf 1)$ele$(tput sgr0)\t"
+    elif [ $(indexOf "$(declare -p ladders)" $ele) != "NULL" ]
+    then
+        echo -ne "$(tput smul)$(tput bold)$(tput setaf 3)$ele$(tput sgr0)\t"
+    else
+        echo -ne "$ele \t"
+    fi
+}
+
+function printBoard(){
+    echo -e "\n\n"
+    for ((i=9; i>=0;i--))
+    do
+        if [ $((i % 2)) -ne 0 ]
+        then
+            for ((j=i*10+10; j > (i*10) ; j--))
+            do
+                printTable $j
+            done
+        else
+            for ((j=i*10 + 1; j <= (i*10 + 10) ; j++))
+            do
+                printTable $j
+            done
+        fi
+
+        echo -e ""
+    done
+        echo -e "\n\n"
+}
+
+printBoard
+
 while(( pos1<100 && pos2 <100 ))
 do
 	dice=$((RANDOM%6+1))
@@ -96,12 +162,16 @@ do
 		#position after every die role
 		echo -e "player $p is at = $pos2\n"
 		winner=2
-		echo "---------------------------------"
 	fi
+
 	if((p==1))
 	then p=2
-	elif((p==2))
-	then p=1
+	elif((p==2 || pos1==100 || pos2==100))
+	then 
+	p=1
+	printTable $pos1 5
+	printTable $pos2 6
+	echo -e "\n---------------------------------"
 	fi
 done
 
