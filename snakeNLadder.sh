@@ -26,11 +26,16 @@ ladders[76]=98
 
 player=1
 pos=0
-while(( pos<=100 ))
+while(( pos<100 ))
 do
 	dice=$((RANDOM%6+1))
 	echo dice = $dice
 	pos=$((pos+dice))
+	if((pos>100))
+	then
+		pos=$((pos-dice))
+	fi
+
 	if [ -v ladders[$pos] ]
 	then
 		echo "got ladder"
