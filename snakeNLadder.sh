@@ -26,9 +26,11 @@ ladders[76]=98
 
 player=1
 pos=0
+rollCount1=0
 while(( pos<100 ))
 do
 	dice=$((RANDOM%6+1))
+	(( rollCount1++ ))
 	echo dice = $dice
 	pos=$((pos+dice))
 	if((pos>100))
@@ -45,5 +47,8 @@ do
 		echo "snake ate you"
 		pos=${snakes[$pos]}
 	fi
+	#position after every die role
 	echo player 1 is at = $pos
 done
+
+echo "Player 1 rolled dice $rollCount1 times to win the game"
