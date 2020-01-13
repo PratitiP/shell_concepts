@@ -1,10 +1,10 @@
 #!/bin/bash -x
 
 #constants for wage calculation
-WAGE_PER_HR=20
-FULL_DAY=1
-PART_TIME=2
-MONTH_WORKING_DAYS=20
+readonly WAGE_PER_HR=20
+readonly FULL_DAY=1
+readonly PART_TIME=2
+readonly MONTH_WORKING_DAYS=20
 
 #variables for wage calculations
 monthlyWage=0
