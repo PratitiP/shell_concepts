@@ -30,7 +30,7 @@ while(( pos<=100 ))
 do
 	dice=$((RANDOM%6+1))
 	echo dice = $dice
-
+	pos=$((pos+dice))
 	if [ -v ladders[$pos] ]
 	then
 		echo "got ladder"
@@ -39,8 +39,6 @@ do
 	then
 		echo "snake ate you"
 		pos=${snakes[$pos]}
-	else
-		pos=$((pos+dice))
 	fi
 	echo player 1 is at = $pos
 done
