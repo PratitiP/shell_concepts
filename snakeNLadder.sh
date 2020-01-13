@@ -27,7 +27,7 @@ ladders[76]=98
 echo -e "\nLadders in the board : "
 for i in ${!ladders[@]}
 do
-	echo "$i ### ${ladders[$i]}"
+	echo -ne "$i\t###\t ${ladders[$i]}\n"
 done
 
 
@@ -87,11 +87,11 @@ do
 		if [ -v ladders[$pos2] ]
 		then
 			echo "got ladder"
-			pos1=${ladders[$pos2]}
+			pos2=${ladders[$pos2]}
 		elif [ -v snakes[$pos2] ]
 		then
 			echo "snake ate you"
-			pos1=${snakes[$pos2]}
+			pos2=${snakes[$pos2]}
 		fi
 		#position after every die role
 		echo -e "player $p is at = $pos2\n"
