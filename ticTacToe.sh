@@ -22,3 +22,13 @@ fi
 print
 echo "Your symbol is : $symbolU"
 
+echo "We just had toss to decide who will play first : "
+r=$((RANDOM%2))
+if((r==0))
+then 
+	player=0
+	echo "You will play first"
+else
+	player=1
+	echo "Computer will play first"
+fi
