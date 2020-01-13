@@ -3,9 +3,9 @@
 echo "==============================="
 echo "Welcome to Snakes and Ladder"
 echo "==============================="
-echo "        One Player Game        "
+echo "        Two Player Game        "
 echo "-------------------------------"
-echo -e "starting position : 0\n"
+
 declare -A snakes
 declare -A ladders
 
@@ -24,31 +24,91 @@ ladders[62]=83
 ladders[69]=91
 ladders[76]=98
 
-player=1
-pos=0
-rollCount1=0
-while(( pos<100 ))
+echo -e "\nLadders in the board : "
+for i in ${!ladders[@]}
 do
-	dice=$((RANDOM%6+1))
-	(( rollCount1++ ))
-	echo dice = $dice
-	pos=$((pos+dice))
-	if((pos>100))
-	then
-		pos=$((pos-dice))
-	fi
-
-	if [ -v ladders[$pos] ]
-	then
-		echo "got ladder"
-		pos=${ladders[$pos]}
-	elif [ -v snakes[$pos] ]
-	then
-		echo "snake ate you"
-		pos=${snakes[$pos]}
-	fi
-	#position after every die role
-	echo player 1 is at = $pos
+	echo "$i ### ${ladders[$i]}"
 done
 
-echo "Player 1 rolled dice $rollCount1 times to win the game"
+
+echo -e "\nSnakes in the board : "
+for i in ${!snakes[@]}
+do
+	echo "$i ~~~ ${snakes[$i]}"
+done
+
+echo -e "\n-------------------------------"
+echo -e "starting position :\nPlayer 1 : 0\nPlayer2 : 0"
+echo -e "-------------------------------\n"
+
+pos1=0
+rollCount1=0
+pos2=0
+rollCount2=0
+p=1
+
+while(( pos1<100 && pos2 <100 ))
+do
+	dice=$((RANDOM%6+1))
+	echo dice = $dice
+
+	if((p==1))
+	then
+		echo player $p
+		(( rollCount1++ ))
+		pos1=$((pos1+dice))
+		if((pos1>100))
+		then
+			pos1=$((pos1-dice))
+		fi
+
+		if [ -v ladders[$pos1] ]
+		then
+			echo "got ladder"
+			pos1=${ladders[$pos1]}
+		elif [ -v snakes[$pos1] ]
+		then
+			echo "snake ate you"
+			pos1=${snakes[$pos1]}
+		fi
+		#position after every die role
+		echo -e "player $p is at = $pos1\n"
+		winner=1
+	elif((p=2))
+	then
+		echo -e "player $p"
+		(( rollCount2++ ))
+		pos2=$((pos2+dice))
+		if((pos2>100))
+		then
+			pos2=$((pos2-dice))
+		fi
+
+		if [ -v ladders[$pos2] ]
+		then
+			echo "got ladder"
+			pos1=${ladders[$pos2]}
+		elif [ -v snakes[$pos2] ]
+		then
+			echo "snake ate you"
+			pos1=${snakes[$pos2]}
+		fi
+		#position after every die role
+		echo -e "player $p is at = $pos2\n"
+		winner=2
+		echo "---------------------------------"
+	fi
+	if((p==1))
+	then p=2
+	elif((p==2))
+	then p=1
+	fi
+done
+
+if((winner==1))
+then
+	echo -e "\nGame Finished : \nPlayer 1 won the game with $rollCount1 rolls\n"
+else
+	echo -e "\nGame Finished : \nPlayer 2 won the game with $rollCount2 rolls\n"
+fi
+
