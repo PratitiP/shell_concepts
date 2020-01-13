@@ -52,7 +52,7 @@ function printTable(){
     fi
 }
 
-echo -e "\n\n\n"
+echo -e "\n\n"
     for ((i=9; i>=0;i--))
     do
         if [ $((i % 2)) -ne 0 ]
@@ -70,5 +70,12 @@ echo -e "\n\n\n"
 
         echo -e ""
     done
-        echo -e "\n\n\n"
+        echo -e "\n\n"
 
+
+player=0
+pos=0
+dice=$((RANDOM%6+1))
+pos=$((pos+dice))
+echo dice = $dice
+echo player 1 is at = $dice
