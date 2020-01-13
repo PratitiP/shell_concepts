@@ -23,11 +23,11 @@ function print(){
 user=$((RANDOM%2))
 if((user==0))
 then
-	symbolU='O'
-	symbolC='X'
+	symbolU="O"
+	symbolC="X"
 else
-	symbolU='X'
-	symbolC='O'
+	symbolU="X"
+	symbolC="O"
 fi
 
 print
@@ -42,30 +42,45 @@ else
 	player=1
 fi
 
+echo $player
 declare -A UC
-UC[0]='O'
-UC[1]='X'
+UC[0]="O"
+UC[1]="X"
 
-if(($symbolU=='O'))
+if [[ "$symbolU" == "O" ]]
 then
 	if((player==1))
 	then
-		UC[0]='X'
-		UC[1]='O'
-	fi
-elif(($symbolU=='X'))
-then
-	if((player=1))
+		echo "reassigned O1"
+		UC[1]="X"
+		UC[0]="O"
+	elif(($player==0)) 
 	then
-		UC[0]='X'
-		UC[1]='O'
+		echo "reassigned O0"
+		UC[0]="O"
+		UC[1]="X"
+	fi
+fi
+if [[ "$symbolU" == "X" ]]
+then
+	if((player==1))
+	then
+		echo "reassigned X1"
+		UC[0]="X"
+		UC[1]="O"
+	elif((player==0))
+	then
+		echo "reassigned X0"
+		UC[0]="X"
+		UC[1]="O"
 	fi
 fi
 
 echo "${UC[0]} ${UC[1]}"
 
 f=0
-while((f==0))
+iterations=1
+while((f==0 && iterations<=9))
 do
 	if((player==0))
 	then
@@ -78,60 +93,60 @@ do
 	fi
 
 	case $move in
-		1) if((${board[0,0]}=='X' || ${board[0,0]}=='0'))
+		1) if [[ ("${board[0,0]}" == "X") || ("${board[0,0]}" == "O") ]]
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[0,0]=${UC[$player]};;
-		2) if((${board[0,1]}=='X' || ${board[0,1]}=='0'))
+			board[0,0]="${UC[$player]}";;
+		2) if((${board[0,1]}=='X' || ${board[0,1]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[0,1]=${UC[$player]};;
-		3) if((${board[0,2]}=='X' || ${board[0,2]}=='0'))
+			board[0,1]="${UC[$player]}";;
+		3) if((${board[0,2]}=='X' || ${board[0,2]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[0,2]=${UC[$player]};;
-		4) if((${board[1,0]}=='X' || ${board[1,0]}=='0'))
+			board[0,2]="${UC[$player]}";;
+		4) if((${board[1,0]}=='X' || ${board[1,0]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[1,0]=${UC[$player]};;
-		5) if((${board[1,1]}=='X' || ${board[1,1]}=='0'))
+			board[1,0]="${UC[$player]}";;
+		5) if((${board[1,1]}=='X' || ${board[1,1]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[1,1]=${UC[$player]};;
-		6) if((${board[1,2]}=='X' || ${board[1,2]}=='0'))
+			board[1,1]="${UC[$player]}";;
+		6) if((${board[1,2]}=='X' || ${board[1,2]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[1,2]=${UC[$player]};;
-		7) if((${board[2,0]}=='X' || ${board[2,0]}=='0'))
+			board[1,2]="${UC[$player]}";;
+		7) if((${board[2,0]}=='X' || ${board[2,0]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[2,0]=${UC[$player]};;
-		8) if((${board[2,1]}=='X' || ${board[2,1]}=='0'))
+			board[2,0]="${UC[$player]}";;
+		8) if((${board[2,1]}=='X' || ${board[2,1]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[2,1]=${UC[$player]};;
-		9) if((${board[2,2]}=='X' || ${board[2,2]}=='0'))
+			board[2,1]="${UC[$player]}";;
+		9) if((${board[2,2]}=='X' || ${board[2,2]}=='O'))
 			then
 				echo "invalid position"
 				continue
 			fi
-			board[2,2]=${UC[$player]};;
+			board[2,2]="${UC[$player]}";;
 		*)
 			echo "Enter valid position (1-9)";;
 	esac
@@ -139,64 +154,107 @@ do
 	print
 
 	#check Winner
-	if((${board[0,0]}==${UC[$player]} && ${board[0,1]}==${UC[$player]}))
-	then 
-		if((${board[0,2]}==${UC[$player]}))
-		then	f=1
-			winner=$player 
-		fi
-	elif((${board[1,0]}==${UC[$player]} && ${board[1,1]}==${UC[$player]}))
+	if [[ "${board[0,0]}" == "${UC[$player]}" ]]
 	then
-		if((${board[1,2]}==${UC[$player]}))
-		then	f=1
-			winner=$player
-		fi
-	elif((${board[2,0]}==${UC[$player]} && ${board[2,1]}==${UC[$player]}))
-	then
-		if((${board[2,2]}==${UC[$player]}))		
-		then	f=1
-			winner=$player
-		fi
-   	elif((${board[0,0]}==${UC[$player]} && ${board[1,0]}==${UC[$player]}))
-	then
-		if((${board[2,0]}==${UC[$player]}))
-		then	f=1
-			winner=$player
-		fi
-	elif((${board[0,1]}==${UC[$player]} && ${board[1,1]}==${UC[$player]}))
-	then
-		if((${board[2,1]}==${UC[$player]}))
-		then	f=1
-			winner=$player
-		fi
-	elif((${board[0,2]}==${UC[$player]} && ${board[1,2]}==${UC[$player]}))
-	then
-		if((${board[2,2]}==${UC[$player]}))
-		then	f=1
-			winner=$player
-		fi
-	elif((${board[0,0]}==${UC[$player]} && ${board[1,1]}==${UC[$player]}))
-	then
-		if((${board[2,2]}==${UC[$player]}))
-		then	f=1
-			winner=$player
-		fi
-	elif((${board[0,2]}==${UC[$player]} && ${board[1,1]}==${UC[$player]}))
-	then
-		if((${board[2,0]}==${UC[$player]}))	
-		then	f=1
-			winner=$player
+		if [[ "${board[0,1]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[0,2]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
 		fi
 	fi
-
+	if [[ "${board[1,0]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[1,2]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi
+	if [[ "${board[2,0]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[2,1]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[2,2]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi	
+	if [[ "${board[0,0]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[1,0]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[2,0]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi 	
+	if [[ "${board[0,1]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[2,1]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi	
+	if [[ "${board[0,2]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[1,2]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[2,2]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi	
+	if [[ "${board[0,0]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[2,2]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi	
+	if [[ "${board[0,2]}" == "${UC[$player]}" ]]
+	then
+		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
+		then 
+			if [[ "${board[2,0]}" == "${UC[$player]}" ]]
+			then	
+				f=1
+				winner=$player 
+			fi
+		fi
+	fi	
+	
 	if((player==0))
 	then player=1
 	else
 		player=0
 	fi
+	((iterations++))
 done
 
-if((winner==0))
+if((iterations>9))
+then
+	echo "Ooooops....There is a tie"
+elif((winner==0))
 then
 	echo "You are winner"
 elif((winner==1))
