@@ -1,19 +1,11 @@
 #!/bin/bash -x
 
-function indexOf(){
-    local val=$2
-    eval "declare -A arg_array="${1#*=}
-    for index in "${!arg_array[@]}"
-    do
-        if [ "$val" == "${arg_array[$index]}" ]
-        then
-            echo $index
-            return 0
-        fi
-    done
-    echo NULL
-}
-
+echo "==============================="
+echo "Welcome to Snakes and Ladder"
+echo "==============================="
+echo "        One Player Game        "
+echo "-------------------------------"
+echo -e "starting position : 0\n"
 declare -A snakes
 declare -A ladders
 
@@ -32,50 +24,23 @@ ladders[62]=83
 ladders[69]=91
 ladders[76]=98
 
-function printTable(){
-    local ele=$1
-
-    if [ -v snakes[$ele] ]
-    then
-        echo -ne "$(tput setab 1)$ele$(tput sgr0)\t"
-    elif [ -v ladders[$ele] ]
-    then
-        echo -ne "$(tput smul)$(tput setab 3)$ele$(tput sgr0)\t"
-    elif [ $(indexOf "$(declare -p snakes)" $ele) != "NULL" ]
-    then
-        echo -ne "$(tput setaf 1)$ele$(tput sgr0)\t"
-    elif [ $(indexOf "$(declare -p ladders)" $ele) != "NULL" ]
-    then
-        echo -ne "$(tput smul)$(tput bold)$(tput setaf 3)$ele$(tput sgr0)\t"
-    else
-        echo -ne "$ele \t"
-    fi
-}
-
-echo -e "\n\n"
-    for ((i=9; i>=0;i--))
-    do
-        if [ $((i % 2)) -ne 0 ]
-        then
-            for ((j=i*10+10; j > (i*10) ; j--))
-            do
-                printTable $j
-            done
-        else
-            for ((j=i*10 + 1; j <= (i*10 + 10) ; j++))
-            do
-                printTable $j
-            done
-        fi
-
-        echo -e ""
-    done
-        echo -e "\n\n"
-
-
-player=0
+player=1
 pos=0
-dice=$((RANDOM%6+1))
-pos=$((pos+dice))
-echo dice = $dice
-echo player 1 is at = $dice
+while(( pos<=100 ))
+do
+	dice=$((RANDOM%6+1))
+	echo dice = $dice
+
+	if [ -v ladders[$pos] ]
+	then
+		echo "got ladder"
+		pos=${ladders[$pos]}
+	elif [ -v snakes[$pos] ]
+	then
+		echo "snake ate you"
+		pos=${snakes[$pos]}
+	else
+		pos=$((pos+dice))
+	fi
+	echo player 1 is at = $pos
+done
