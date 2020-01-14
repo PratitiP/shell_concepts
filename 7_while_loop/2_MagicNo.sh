@@ -1,7 +1,6 @@
 #!/bin/bash -x
 echo Think a no between 1 to 100
 
-f=0
 head=0
 tail=100
 while [[ $head < $tail ]]
@@ -22,10 +21,6 @@ do
 	then
 		head=$newFactor
 	fi
-	echo $head $tail
 
 done
 echo "Your no is $tail"
-
-done
-echo "Your number is : $ncR"

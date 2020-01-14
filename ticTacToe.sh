@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-echo "Welcome to Tic-Tac-Toe"
+echo -e "============================\nWelcome to Tic-Tac-Toe\n============================"
 
 declare -A board
 board[0,0]=1
@@ -158,6 +158,72 @@ function getWinMove(){
 	
 }
 
+function checkCorners(){
+	symbol=${UC[$1]}
+	if(($1==1))
+	then symbolOpp="${UC[0]}"
+	else symbolOpp="${UC[1]}"
+	fi
+	cornerMove=0
+	if [[ "${board[0,0]}" != "$symbolOpp" && "${board[0,0]}" != "$symbol" ]]
+	then	board[0,0]="$symbol"
+		cornerMove="0,0"
+		return
+	fi
+	if [[ "${board[0,2]}" != "$symbolOpp" && "${board[0,2]}" != "$symbol" ]]
+	then	board[0,2]="$symbol"
+		cornerMove="0,2"
+		return
+	fi
+	if [[ "${board[2,0]}" != "$symbolOpp" && "${board[2,0]}" != "$symbol" ]]
+	then	board[2,0]="$symbol"
+		cornerMove="2,0"
+		return
+	fi
+	if [[ "${board[2,2]}" != "$symbolOpp" && "${board[2,2]}" != "$symbol" ]]
+	then	board[2,2]="$symbol"
+		cornerMove="2,2"
+		return
+	fi
+	#look for center if corner not available
+	centerMove=0
+	if [[ "${board[1,1]}" != "$symbolOpp" && "${board[1,1]}" != "$symbol" ]]
+	then	board[1,1]="$symbol"
+		centerMove="1,1"
+		return
+	fi
+}
+
+function checkSides(){
+	symbol=${UC[$1]}
+	if(($1==1))
+	then symbolOpp="${UC[0]}"
+	else symbolOpp="${UC[1]}"
+	fi
+	sideMove=0
+	if [[ "${board[1,0]}" != "$symbolOpp" && "${board[1,0]}" != "$symbol" ]]
+	then	board[1,0]="$symbol"
+		sideMove="1,0"
+		return
+	fi
+	if [[ "${board[0,1]}" != "$symbolOpp" && "${board[0,1]}" != "$symbol" ]]
+	then	board[0,1]="$symbol"
+		sideMove="0,1"
+		return
+	fi
+	if [[ "${board[1,2]}" != "$symbolOpp" && "${board[1,2]}" != "$symbol" ]]
+	then	board[1,2]="$symbol"
+		sideMove="1,2"
+		return
+	fi
+	if [[ "${board[2,1]}" != "$symbolOpp" && "${board[2,1]}" != "$symbol" ]]
+	then	board[2,1]="$symbol"
+		sideMove="2,1"
+		return
+	fi
+
+}
+
 user=$((RANDOM%2))
 if((user==0))
 then
@@ -177,11 +243,12 @@ r=$((RANDOM%2))
 if((r==0))
 then 
 	player=0
+	echo "You will play first"
 else
 	player=1
+	echo "Computer will play first"
 fi
 
-echo $player
 declare -A UC
 UC[0]="O"
 UC[1]="X"
@@ -218,27 +285,39 @@ while((f==0 && iterations<=9))
 do
 	if((player==0))
 	then
-		echo "You will play Now : "
+		echo -e "-----------------------------"		
+		echo "You will play Now (${UC[0]}) : "
 		read move
 
 	else
-		echo "Computer will play Now : "
-		if((iterations<5))
-		then	read move
-		else
-			getWinMove 1
-			if((winMove==0))
-			then	getWinMove 0
-				if((winMove!=0))
-				then	board[$winMove]="${UC[1]}"
-				fi
-			else
+		-----------------------------
+		echo "Computer played (${UC[1]}) : "
+		winMove=0
+		cornerMove=0
+		centerMove=0
+		sideMove=0
+		getWinMove 1
+		if [[ "$winMove" == 0 ]]
+		then	
+			getWinMove 0
+			if [[ "$winMove" -ne 0 ]]
+			then	
 				board[$winMove]="${UC[1]}"
+			else
+				#check for corner & center move
+				checkCorners 1
+				if [[ $cornerMove == 0 && $centerMove == 0 ]]
+				then
+					#look for next move : side
+					checkSides 1						
+				fi				
 			fi
+		else	
+			board[$winMove]="${UC[1]}"
 		fi
 	fi
 	
-	if((player!=1 || iterations<5))
+	if((player==0))
 	then
 	case $move in
 		1) if [[ ("${board[0,0]}" == "X") || ("${board[0,0]}" == "O") ]]
