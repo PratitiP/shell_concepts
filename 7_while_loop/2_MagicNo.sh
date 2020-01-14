@@ -11,7 +11,7 @@ do
 	newFactor=$(( (ncR+ncL) / 2 ))
 	echo "is no greater than $newFactor (y/n) : "
 	read lg
-	#logic to get new n/2 child
+	#logic to get new n/2 (nc)
 	if [[ $lg == 'n' ]]
 	then 
 		ncR=$newFactor 
