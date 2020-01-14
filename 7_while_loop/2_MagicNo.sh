@@ -27,3 +27,5 @@ do
 done
 echo "Your no is $tail"
 
+done
+echo "Your number is : $ncR"
