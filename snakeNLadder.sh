@@ -27,7 +27,7 @@ ladders[76]=98
 echo -e "\nLadders in the board : "
 for i in ${!ladders[@]}
 do
-	echo -ne "$i\t###\t ${ladders[$i]}\n"
+	echo -ne " $i\t#####\t ${ladders[$i]} \n"
 done
 
 
@@ -36,10 +36,6 @@ for i in ${!snakes[@]}
 do
 	echo "$i ~~~ ${snakes[$i]}"
 done
-
-echo -e "\n-------------------------------"
-echo -e "starting position :\nPlayer 1 : 0\nPlayer2 : 0"
-echo -e "-------------------------------\n"
 
 pos1=0
 rollCount1=0
@@ -90,7 +86,7 @@ function printTable(){
 }
 
 function printBoard(){
-    echo -e "\n\n"
+    echo -e "\n-----------------------------------------------------------------------------"
     for ((i=9; i>=0;i--))
     do
         if [ $((i % 2)) -ne 0 ]
@@ -108,10 +104,14 @@ function printBoard(){
 
         echo -e ""
     done
-        echo -e "\n\n"
+        echo -e "-----------------------------------------------------------------------------\n"
 }
 
 printBoard
+
+echo -e "-------------------------------"
+echo -e "starting position :\nPlayer 1 : 0\nPlayer2 : 0"
+echo -e "-------------------------------\n"
 
 while(( pos1<100 && pos2 <100 ))
 do
