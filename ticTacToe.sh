@@ -112,12 +112,12 @@ function checkWinner(){
 
 #get winning move
 function getWinMove(){
-	symbol="${UC[$player]}"
-	if((player==1))
+	symbol=${UC[$1]}
+	if(($1==1))
 	then symbolOpp="${UC[0]}"
 	else symbolOpp="${UC[1]}"
 	fi
-	
+	winMove=0
 	#check all rows
 	for((i=0;i<2;i++))
 	do
@@ -131,7 +131,8 @@ function getWinMove(){
 				then	break
 				else	
 				#winMove
-				board[$i,$j]="$symbol"
+				#board[$i,$j]="$symbol"
+				winMove="$i,$j"
 				return
 				fi
 			done
@@ -151,7 +152,8 @@ function getWinMove(){
 				then	break
 				else	
 				#winMove
-				board[$j,$i]="$symbol"
+				#board[$j,$i]="$symbol"
+				winMove="$j,$i"
 				return
 				fi
 			done
@@ -162,13 +164,16 @@ function getWinMove(){
 	if [[ ( "${board[0,0]}" == "${board[1,1]}" && "${board[0,0]}" == "$symbol" ) || ( "${board[0,0]}" == "${board[2,2]}" && "${board[0,0]}" == "$symbol" ) || ( "${board[1,1]}" == "${board[2,2]}" && "${board[1,1]}" == "$symbol" ) ]]
 	then
 		if [[ "${board[0,0]}" != "$symbolOpp" && "${board[0,0]}" != "$symbol" ]]
-		then	board[0,0]="$symbol"
+		then	#board[0,0]="$symbol"
+			winMove="0,0"
 			return
 		elif [[ "${board[1,1]}" != "$symbolOpp" && "${board[1,1]}" != "$symbol" ]]
-		then	board[1,1]="$symbol"
+		then	#board[1,1]="$symbol"
+			winMove="1,1"
 			return
 		elif [[ "${board[2,2]}" != "$symbolOpp" && "${board[2,2]}" != "$symbol" ]]
-		then	board[2,2]="$symbol"
+		then	#board[2,2]="$symbol"
+			winMove="2,2"
 			return
 		fi
 	fi
@@ -176,14 +181,17 @@ function getWinMove(){
 	#check for / diagonal
 	if [[ ( "${board[0,2]}" == "${board[1,1]}" && "${board[0,2]}" == "$symbol" ) || ( "${board[0,2]}" == "${board[2,0]}" && "${board[0,2]}" == "$symbol" ) || ( "${board[1,1]}" == "${board[2,0]}" && "${board[1,1]}" == "$symbol" ) ]]
 	then
-		if [[ "${board[0,2]}" != "$symbolOpp" ] && [ "${board[0,2]}" != "$symbol" ]]
-		then	board[0,2]="$symbol"
+		if [[ "${board[0,2]}" != "$symbolOpp" && "${board[0,2]}" != "$symbol" ]]
+		then	#board[0,2]="$symbol"
+			winMove="0,2"
 			return
-		elif [[ "${board[1,1]}" != "$symbolOpp" ] && [ "${board[1,1]}" != "$symbol" ]]
-		then	board[1,1]="$symbol"
+		elif [[ "${board[1,1]}" != "$symbolOpp" && "${board[1,1]}" != "$symbol" ]]
+		then	#board[1,1]="$symbol"
+			winMove="1,1"
 			return
-		elif [[ "${board[2,0]}" != "$symbolOpp" ] && [ "${board[2,0]}" != "$symbol" ]]
-		then	board[2,0]="$symbol"
+		elif [[ "${board[2,0]}" != "$symbolOpp" && "${board[2,0]}" != "$symbol" ]]
+		then	#board[2,0]="$symbol"
+			winMove="2,0"
 			return
 		fi
 	fi
@@ -255,9 +263,23 @@ do
 
 	else
 		echo "Computer will play Now : "
-		read move
+		if((iterations<5))
+		then	read move
+		else
+			getWinMove 1
+			if((winMove==0))
+			then	getWinMove 0
+				if((winMove!=0))
+				then	board[$winMove]="${UC[1]}"
+				fi
+			else
+				board[$winMove]="${UC[1]}"
+			fi
+		fi
 	fi
-
+	
+	if((player!=1 || iterations<5))
+	then
 	case $move in
 		1) if [[ ("${board[0,0]}" == "X") || ("${board[0,0]}" == "O") ]]
 			then
@@ -316,7 +338,7 @@ do
 		*)
 			echo "Enter valid position (1-9)";;
 	esac
-
+	fi
 	print
 
 	#check Winner
