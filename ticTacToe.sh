@@ -20,93 +20,53 @@ function print(){
 }
 
 function checkWinner(){
-	if [[ "${board[0,0]}" == "${UC[$player]}" ]]
+	if [[ "${board[0,0]}" == "${UC[$player]}" && "${board[0,1]}" == "${UC[$player]}" && "${board[0,2]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[0,1]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[0,2]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player
+		return 
 	fi
-	if [[ "${board[1,0]}" == "${UC[$player]}" ]]
+	if [[ "${board[1,0]}" == "${UC[$player]}" && "${board[1,1]}" == "${UC[$player]}" && "${board[1,2]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[1,2]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player
+		return 
 	fi
-	if [[ "${board[2,0]}" == "${UC[$player]}" ]]
+	if [[ "${board[2,0]}" == "${UC[$player]}" && "${board[2,1]}" == "${UC[$player]}" && "${board[2,2]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[2,1]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[2,2]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player 
+		return
 	fi	
-	if [[ "${board[0,0]}" == "${UC[$player]}" ]]
+	if [[ "${board[0,0]}" == "${UC[$player]}" && "${board[1,0]}" == "${UC[$player]}" && "${board[2,0]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[1,0]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[2,0]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player 
+		return
 	fi 	
-	if [[ "${board[0,1]}" == "${UC[$player]}" ]]
+	if [[ "${board[0,1]}" == "${UC[$player]}" && "${board[1,1]}" == "${UC[$player]}" && "${board[2,1]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[2,1]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player 
+		return
 	fi	
-	if [[ "${board[0,2]}" == "${UC[$player]}" ]]
+	if [[ "${board[0,2]}" == "${UC[$player]}" && "${board[1,2]}" == "${UC[$player]}" && "${board[2,2]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[1,2]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[2,2]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player 
+		return
 	fi	
-	if [[ "${board[0,0]}" == "${UC[$player]}" ]]
+	if [[ "${board[0,0]}" == "${UC[$player]}" && "${board[1,1]}" == "${UC[$player]}" && "${board[2,2]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[2,2]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player 
+		return		
 	fi	
-	if [[ "${board[0,2]}" == "${UC[$player]}" ]]
+	if [[ "${board[0,2]}" == "${UC[$player]}" && "${board[1,1]}" == "${UC[$player]}" && "${board[2,0]}" == "${UC[$player]}" ]]
 	then
-		if [[ "${board[1,1]}" == "${UC[$player]}" ]]
-		then 
-			if [[ "${board[2,0]}" == "${UC[$player]}" ]]
-			then	
-				f=1
-				winner=$player 
-			fi
-		fi
+		f=1
+		winner=$player 
+		return		
 	fi	
 }
 
@@ -343,6 +303,7 @@ do
 
 	#check Winner
 	checkWinner
+	#using getWinMove function
 	
 	if((player==0))
 	then player=1
