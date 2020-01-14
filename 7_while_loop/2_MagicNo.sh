@@ -2,38 +2,27 @@
 echo Think a no between 1 to 100
 
 f=0
-np=100
-nc=50
-while [[ $f == 0 ]]
+ncR=100
+ncL=0
+while [[ $ncL -lt $ncR ]]
 do
-	echo "is no greater than $nc (y/n) : "
-	read lg
-	temp=$nc
+
 	#newFactor is to be added or subtracted to get new nc depending on l/g value
-	newFactor=$(( (nc-np) / 2 ))
-	if [[ $newFactor -lt 0 ]]
-	then 
-		newFactor=$(( newFactor*(-1) ))
-	fi
-	#logic to get new n/2 (nc)
+	newFactor=$(( (ncR+ncL) / 2 ))
+	echo "is no greater than $newFactor (y/n) : "
+	read lg
+	#logic to get new n/2 child
 	if [[ $lg == 'n' ]]
 	then 
-		nc=$(( nc - newFactor )) 
-		np=$temp
+		ncR=$newFactor 
 	elif [[ $lg == 'y' ]]
 	then
-		nc=$(( nc + newFactor )) 
-		np=$temp
+		ncL=$newFactor 
 	fi
-
-	#echo "nc = $nc and np = $np"
-	if [[ ($nc -eq $np) || ($newFactor -eq 0) ]]
+	if [[ $((ncR-ncL)) -eq 1 ]]
 	then 
-		if [[ $lg == 'y' ]]
-		then (( np++ ))
-		fi
-		echo "Your no is $np"
-		f=1
+		break
 	fi
-done
 
+done
+echo "Your number is : $ncR"
