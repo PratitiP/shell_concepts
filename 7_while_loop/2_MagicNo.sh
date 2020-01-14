@@ -1,4 +1,4 @@
-
+#!/bin/bash -x
 echo Think a no between 1 to 100
 
 f=0
