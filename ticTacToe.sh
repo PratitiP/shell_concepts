@@ -2,6 +2,7 @@
 
 echo -e "============================\nWelcome to Tic-Tac-Toe\n============================"
 
+#tic-tac-toe board
 declare -A board
 board[0,0]=1
 board[0,1]=2
@@ -19,6 +20,7 @@ function print(){
 	echo -e " ${board[2,0]} | ${board[2,1]} | ${board[2,2]}"
 }
 
+#check if any player wins
 function checkWinner(){
 	if [[ "${board[0,0]}" == "${UC[$player]}" && "${board[0,1]}" == "${UC[$player]}" && "${board[0,2]}" == "${UC[$player]}" ]]
 	then
@@ -79,7 +81,7 @@ function getWinMove(){
 	fi
 	winMove=0
 	#check all rows
-	for((i=0;i<2;i++))
+	for((i=0;i<3;i++))
 	do
 		if [[ ( "${board[$i,0]}" == "${board[$i,1]}" && "${board[$i,0]}" == "$symbol" ) || ( "${board[$i,0]}" == "${board[$i,2]}" && "${board[$i,0]}" == "$symbol" ) || ( "${board[$i,1]}" == "${board[$i,2]}" && "${board[$i,1]}" == "$symbol" ) ]]
 		then
@@ -93,14 +95,14 @@ function getWinMove(){
 				#winMove
 				#board[$i,$j]="$symbol"
 				winMove="$i,$j"
-				return
+				return 1
 				fi
 			done
 		fi
 	done
 
 	#check all columns
-	for((i=0;i<2;i++))
+	for((i=0;i<3;i++))
 	do
 		if [[ ("${board[0,$i]}" == "${board[1,$i]}" && "${board[0,$i]}" == "$symbol" ) || ( "${board[0,$i]}" == "${board[2,$i]}" && "${board[0,$i]}" == "$symbol" ) || ( "${board[1,$i]}" == "${board[2,$i]}" && "${board[1,$i]}" == "$symbol" ) ]]
 		then
@@ -114,7 +116,7 @@ function getWinMove(){
 				#winMove
 				#board[$j,$i]="$symbol"
 				winMove="$j,$i"
-				return
+				return 1
 				fi
 			done
 		fi
@@ -126,15 +128,15 @@ function getWinMove(){
 		if [[ "${board[0,0]}" != "$symbolOpp" && "${board[0,0]}" != "$symbol" ]]
 		then	#board[0,0]="$symbol"
 			winMove="0,0"
-			return
+			return 1
 		elif [[ "${board[1,1]}" != "$symbolOpp" && "${board[1,1]}" != "$symbol" ]]
 		then	#board[1,1]="$symbol"
 			winMove="1,1"
-			return
+			return 1
 		elif [[ "${board[2,2]}" != "$symbolOpp" && "${board[2,2]}" != "$symbol" ]]
 		then	#board[2,2]="$symbol"
 			winMove="2,2"
-			return
+			return 1
 		fi
 	fi
 
@@ -144,18 +146,19 @@ function getWinMove(){
 		if [[ "${board[0,2]}" != "$symbolOpp" && "${board[0,2]}" != "$symbol" ]]
 		then	#board[0,2]="$symbol"
 			winMove="0,2"
-			return
+			return 1
 		elif [[ "${board[1,1]}" != "$symbolOpp" && "${board[1,1]}" != "$symbol" ]]
 		then	#board[1,1]="$symbol"
 			winMove="1,1"
-			return
+			return 1
 		elif [[ "${board[2,0]}" != "$symbolOpp" && "${board[2,0]}" != "$symbol" ]]
 		then	#board[2,0]="$symbol"
 			winMove="2,0"
-			return
+			return 1
 		fi
 	fi
-	
+	#if winMove not available	
+	return 0
 }
 
 function checkCorners(){
@@ -168,30 +171,31 @@ function checkCorners(){
 	if [[ "${board[0,0]}" != "$symbolOpp" && "${board[0,0]}" != "$symbol" ]]
 	then	board[0,0]="$symbol"
 		cornerMove="0,0"
-		return
+		return 1
 	fi
 	if [[ "${board[0,2]}" != "$symbolOpp" && "${board[0,2]}" != "$symbol" ]]
 	then	board[0,2]="$symbol"
 		cornerMove="0,2"
-		return
+		return 1
 	fi
 	if [[ "${board[2,0]}" != "$symbolOpp" && "${board[2,0]}" != "$symbol" ]]
 	then	board[2,0]="$symbol"
 		cornerMove="2,0"
-		return
+		return 1
 	fi
 	if [[ "${board[2,2]}" != "$symbolOpp" && "${board[2,2]}" != "$symbol" ]]
 	then	board[2,2]="$symbol"
 		cornerMove="2,2"
-		return
+		return 1
 	fi
 	#look for center if corner not available
 	centerMove=0
 	if [[ "${board[1,1]}" != "$symbolOpp" && "${board[1,1]}" != "$symbol" ]]
 	then	board[1,1]="$symbol"
 		centerMove="1,1"
-		return
+		return 1
 	fi
+	return 0
 }
 
 function checkSides(){
@@ -204,24 +208,24 @@ function checkSides(){
 	if [[ "${board[1,0]}" != "$symbolOpp" && "${board[1,0]}" != "$symbol" ]]
 	then	board[1,0]="$symbol"
 		sideMove="1,0"
-		return
+		return 1
 	fi
 	if [[ "${board[0,1]}" != "$symbolOpp" && "${board[0,1]}" != "$symbol" ]]
 	then	board[0,1]="$symbol"
 		sideMove="0,1"
-		return
+		return 1
 	fi
 	if [[ "${board[1,2]}" != "$symbolOpp" && "${board[1,2]}" != "$symbol" ]]
 	then	board[1,2]="$symbol"
 		sideMove="1,2"
-		return
+		return 1
 	fi
 	if [[ "${board[2,1]}" != "$symbolOpp" && "${board[2,1]}" != "$symbol" ]]
 	then	board[2,1]="$symbol"
 		sideMove="2,1"
-		return
+		return 1
 	fi
-
+	return 0
 }
 
 user=$((RANDOM%2))
@@ -290,23 +294,23 @@ do
 		read move
 
 	else
-		-----------------------------
+		echo -e "-----------------------------"
 		echo "Computer played (${UC[1]}) : "
 		winMove=0
 		cornerMove=0
 		centerMove=0
 		sideMove=0
 		getWinMove 1
-		if [[ "$winMove" == 0 ]]
+		if [[ $? == 0 ]]
 		then	
 			getWinMove 0
-			if [[ "$winMove" -ne 0 ]]
+			if [[ $? -ne 0 ]]
 			then	
 				board[$winMove]="${UC[1]}"
 			else
 				#check for corner & center move
 				checkCorners 1
-				if [[ $cornerMove == 0 && $centerMove == 0 ]]
+				if [[ $? -eq 0 ]]
 				then
 					#look for next move : side
 					checkSides 1						
@@ -382,7 +386,6 @@ do
 
 	#check Winner
 	checkWinner
-	#using getWinMove function
 	
 	if((player==0))
 	then player=1
