@@ -1,3 +1,4 @@
+#!/bin/bash -x
 
 one_ft=12;
 in=42

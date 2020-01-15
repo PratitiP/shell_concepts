@@ -1,4 +1,4 @@
-##!/bin/bash
+#!/bin/bash -x
 function get_Prime_Factors(){
 	n=$1
 	a=0

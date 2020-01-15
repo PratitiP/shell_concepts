@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo "Enter 1,10,100,1000,..... to get digits place"
 read n
 

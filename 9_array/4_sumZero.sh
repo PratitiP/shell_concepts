@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 function check_sum_zero(){
 	size=${#arr[@]}
 	for (( i=0 ; i<$(($size-2)) ; i++ ))

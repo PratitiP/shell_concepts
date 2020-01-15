@@ -1,4 +1,4 @@
-##!/bin/bash -x
+#!/bin/bash -x
 function gen_random(){
 	diff=$((999-100+1))
 	max=100

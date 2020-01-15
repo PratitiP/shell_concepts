@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo Enter 3 nos.
 read n1 n2 n3
 echo $n1 $n2 $n3

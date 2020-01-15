@@ -1,4 +1,5 @@
 #!/bin/bash -x
+
 function get_birth_months(){
 	r=$(($(($RANDOM%12))+1))
 	case $r in 

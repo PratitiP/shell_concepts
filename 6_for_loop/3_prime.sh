@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo Enter a no. 
 read n
 isPrime=0

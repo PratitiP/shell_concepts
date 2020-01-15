@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo Enter a no to get factorial
 read n
 fact=1

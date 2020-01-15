@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 diff=$((999-100+1));
 a=$(($(($RANDOM%diff))+100));
 b=$(($(($RANDOM%diff))+100));

@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 function roll_dice(){
 	r=$(($(($RANDOM%6))+1))
 	dict[$r]=$((${dict[$r]}+1))

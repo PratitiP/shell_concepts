@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo "Enter Year : "
 read y;
 if [[ $(($y%4)) == 0 ]];

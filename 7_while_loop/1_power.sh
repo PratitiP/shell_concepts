@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo Enter no to get 2^n upto 256
 read n
 i=0

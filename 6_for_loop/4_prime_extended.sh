@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo "Enter a two no to get prime nos. in that range" 
 read a b
 

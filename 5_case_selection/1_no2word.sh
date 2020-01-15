@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo Enter single digit no
 read n
 

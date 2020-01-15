@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 function degF-C(){
 	var=$1
 	echo "Enter value between (32 - 212) for $var conversion"

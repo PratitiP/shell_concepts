@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 flip_coin=$(($RANDOM%2));
 echo $flip_coin
 if [[ $flip_coin == 0 ]];

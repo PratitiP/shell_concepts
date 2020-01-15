@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo "Enter weekday in no (0-6)"
 read n
 

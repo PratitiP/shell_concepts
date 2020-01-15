@@ -1,4 +1,4 @@
-##!/bin/bash -x
+#!/bin/bash -x
 check_repeat_twice(){
 	n=$1
 	if [[ $(($n%11)) == 0 ]]

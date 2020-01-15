@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo enter value to convert 
 read v
 echo -e "Select no. for unit conversion : \n1.Feet to inch\t\t3.inch to feet\n2.Feet to meter\t\t4.Meter to feet"

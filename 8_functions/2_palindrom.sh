@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 function get_palindrom(){
 	n=$1
 	rev=`echo $n | rev`

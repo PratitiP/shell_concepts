@@ -1,3 +1,4 @@
+#!/bin/bash -x
 diff=$((99-10+1))
 a=$(($(($RANDOM%diff))+10));
 b=$(($(($RANDOM%diff))+10))

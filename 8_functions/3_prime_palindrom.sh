@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 function check_Prime(){
 	n=$1
 	isPrime=0

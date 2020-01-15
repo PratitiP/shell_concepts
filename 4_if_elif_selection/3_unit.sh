@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo "Enter no 1,10,100,1000,... to get unit"
 read n
 if [[ $n == 1 ]];

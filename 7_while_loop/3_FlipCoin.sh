@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 cH=0
 cT=0
 

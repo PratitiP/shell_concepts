@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -x
+
 echo Enter a no to get prime factors : 
 read n
 

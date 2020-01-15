@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo "enter single digit no : "
 read n
 if [[ $n == 0 ]];

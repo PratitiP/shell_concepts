@@ -1,8 +1,5 @@
 #!/bin/bash -x
 
-#echo "enter month : " && read m && echo "enter day : " && read  d && echo "enter year : " && read y;
-#echo "$m/$d/$y" 
-#modified for command-line arguments
 m=$1
 d=$2
 y=$3

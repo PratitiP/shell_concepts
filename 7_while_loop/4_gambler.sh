@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 echo -e "Welcome to Gambling \nYou have Rs.100 \nYou can bet Rs.1 until you broke or get Rs.200"
 winC=0
 nBet=0
