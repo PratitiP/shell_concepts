@@ -45,7 +45,7 @@ p=1
 
 
 function indexOf(){
-    local val=$2
+    val=$2
     eval "declare -A arg_array="${1#*=}
     for index in "${!arg_array[@]}"
     do
@@ -59,36 +59,38 @@ function indexOf(){
 }
 
 function printTable(){
-    local ele=$1
+        pos=$1
 	color=$2
 
     if((color==5))
     then
-	 echo -ne "$(tput setab 5)$ele$(tput sgr0)\t"
+	 echo -ne "$(tput setab 5)$pos$(tput sgr0)\t"
     elif((color==6))
     then 
-	echo -ne "$(tput setab 6)$ele$(tput sgr0)\t"
-    elif [ -v snakes[$ele] ]
+	echo -ne "$(tput setab 6)$pos$(tput sgr0)\t"
+    elif [ -v ladders[$pos] ]
     then
-        echo -ne "$(tput setab 1)$ele$(tput sgr0)\t"
-    elif [ -v ladders[$ele] ]
+        echo -ne "$(tput smul)$(tput setab 3)$pos$(tput sgr0)\t"
+    elif [ -v snakes[$pos] ]
     then
-        echo -ne "$(tput smul)$(tput setab 3)$ele$(tput sgr0)\t"
-    elif [ $(indexOf "$(declare -p snakes)" $ele) != "NULL" ]
+        echo -ne "$(tput setab 1)$pos$(tput sgr0)\t"
+    elif [ $(indexOf "$(declare -p ladders)" $pos) != "NULL" ]
     then
-        echo -ne "$(tput setaf 1)$ele$(tput sgr0)\t"
-    elif [ $(indexOf "$(declare -p ladders)" $ele) != "NULL" ]
+        echo -ne "$(tput smul)$(tput bold)$(tput setaf 3)$pos$(tput sgr0)\t"    
+    
+    elif [ $(indexOf "$(declare -p snakes)" $pos) != "NULL" ]
     then
-        echo -ne "$(tput smul)$(tput bold)$(tput setaf 3)$ele$(tput sgr0)\t"
+        echo -ne "$(tput setaf 1)$pos$(tput sgr0)\t"
     else
-        echo -ne "$ele \t"
+        echo -ne "$pos \t"
     fi
 }
 
 function printBoard(){
-    echo -e "\n-----------------------------------------------------------------------------"
+    echo -e "\n==============================================================================="
     for ((i=9; i>=0;i--))
     do
+	echo -ne "   "
         if [ $((i % 2)) -ne 0 ]
         then
             for ((j=i*10+10; j > (i*10) ; j--))
@@ -102,9 +104,9 @@ function printBoard(){
             done
         fi
 
-        echo -e ""
+        echo -e "\n"
     done
-        echo -e "-----------------------------------------------------------------------------\n"
+        echo -e "===============================================================================\n"
 }
 
 printBoard
