@@ -132,11 +132,11 @@ do
 
 		if [ -v ladders[$pos1] ]
 		then
-			echo "got ladder"
+			echo "$(tput setab 3)You got ladder$(tput sgr0)"
 			pos1=${ladders[$pos1]}
 		elif [ -v snakes[$pos1] ]
 		then
-			echo "snake ate you"
+			echo "$(tput setab 1)snake ate you$(tput sgr0)"
 			pos1=${snakes[$pos1]}
 		fi
 		#position after every die role
@@ -154,11 +154,11 @@ do
 
 		if [ -v ladders[$pos2] ]
 		then
-			echo "got ladder"
+			echo "$(tput setab 3)You got ladder$(tput sgr0)"
 			pos2=${ladders[$pos2]}
 		elif [ -v snakes[$pos2] ]
 		then
-			echo "snake ate you"
+			echo "$(tput setab 1)snake ate you$(tput sgr0)"
 			pos2=${snakes[$pos2]}
 		fi
 		#position after every die role
