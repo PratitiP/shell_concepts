@@ -5,7 +5,7 @@ head=0
 tail=100
 while [[ $head < $tail ]]
 do
-	if [[ $((tail-head)) != 1 ]]
+	if [[ $((tail-head)) == 1 ]]
 	then break
 	fi
 	newFactor=$(( (head+tail) / 2 ))
